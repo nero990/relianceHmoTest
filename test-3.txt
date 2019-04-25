@@ -1,0 +1,16 @@
+Using Laravel Task Scheduling
+
+By default, scheduled tasks will be run regardless of whether the previous instance is still running. 
+To avoid this, you may use the withoutOverlapping method
+
+For Example, If the Command signature is "process:user", to run the cron job for every one minute without overlapping, 
+we'll have:
+$schedule->command('process:user')->everyMinute()->withoutOverlapping();
+
+
+
+
+Using Laravel Queue with multiple workers
+
+Before dispatching any job, I'll ensure I lock down the process (by flagging the process as reserved) then dispatch the job. 
+So as long as a process is locked down, a new job will not be dispatched to the worker. With this, there wil never be an overlap.
